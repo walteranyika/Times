@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         if (isConnected()) {
             startActivity(new Intent(this, LandingActivity.class));
             finish();
+            InputMethodManager imm2 = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm2.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }else{
             Toast.makeText(this, "You need Internet Connection. Please Turn on your data or connect to a WIFI", Toast.LENGTH_SHORT).show();
         }

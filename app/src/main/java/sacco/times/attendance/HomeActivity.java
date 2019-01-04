@@ -33,11 +33,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import dmax.dialog.SpotsDialog;
 import sacco.times.attendance.adapters.CustomAdapter;
+import sacco.times.attendance.models.CustomComparator;
 import sacco.times.attendance.models.Item;
+import sacco.times.attendance.utils.DateUtils;
 import sacco.times.attendance.utils.Urls;
 
 public class HomeActivity extends AppCompatActivity     implements NavigationView.OnNavigationItemSelectedListener {
@@ -184,10 +188,15 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
                             if (logname==null || logname.trim().isEmpty() || branch.trim().isEmpty() || branch==null)
                                 continue;
                             Item k = new Item(pin, branch, device_branch, device, logname, logtime, department,logout);
+                            Date startDate = DateUtils.parseDate(logtime);
+                            k.setLoginDate(startDate);
                             mItemsArrayList.add(k);
 
 
                         }
+                        //sort
+                        Collections.sort(mItemsArrayList,new CustomComparator());
+
                         mCustomAdapter.notifyDataSetChanged();
                         toggleTextView();
                     } catch (JSONException e) {
@@ -224,7 +233,7 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
         View view2=mSpinnerDepartment.getActionView();
         if (view2 instanceof Spinner){
             final Spinner spinner2 = (Spinner) view2;
-            final String deps[] = {"All Dep", "ICT", "FINANCE", "CREDIT", "BUSINESS DEVELOPMENT"};
+            final String deps[] = {"All Dep", "ICT", "FINANCE", "CREDIT", "BS DEV","AUDIT"};
             ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_spinner_item, deps);
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner2.setAdapter(adapter2);

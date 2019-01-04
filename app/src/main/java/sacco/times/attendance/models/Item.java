@@ -1,5 +1,7 @@
 package sacco.times.attendance.models;
 
+import java.util.Date;
+
 /**
  * Created by walter on 1/3/19.
  */
@@ -7,6 +9,8 @@ package sacco.times.attendance.models;
 public class Item {
 
     private String pin,  branch, device_branch, device, logname, logtime, department,logout;
+    Date loginDate;
+
 
     public Item() {
     }
@@ -30,6 +34,14 @@ public class Item {
         this.logtime = logtime;
         this.department = department;
         this.logout = logout;
+    }
+
+    public Date getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(Date loginDate) {
+        this.loginDate = loginDate;
     }
 
     public String getLogout() {

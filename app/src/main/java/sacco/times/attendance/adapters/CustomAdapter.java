@@ -46,7 +46,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.txtDate.setText(u.getLogtime().split(" ")[0]);
         holder.txtTimeIn.setText(u.getLogtime().split(" ")[1]);
         holder.txtTimeOut.setText(u.getLogout().split(" ")[1]);
-        holder.txtDepartment.setText(u.getDepartment());
+        String dep=u.getDepartment().length()>12?"BS DEV":u.getDepartment();
+        holder.txtDepartment.setText(dep);
 
         Date startDate = DateUtils.parseDate(u.getLogtime());
         Date endDate = DateUtils.parseDate(u.getLogout());
