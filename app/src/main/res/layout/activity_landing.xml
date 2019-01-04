@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    tools:context="sacco.times.attendance.LandingActivity"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="#1ab915"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:onClick="today_present"
+                android:id="@+id/salesBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#3b414f"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_present"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="Today Present"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:onClick="today_absent"
+                android:id="@+id/inventoryBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#03a9f4"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_specific_date"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="Today Absent"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:onClick="today_late"
+                android:id="@+id/reportsBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#7D53A0"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_late"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="Today's Late"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:onClick="yesterday_present"
+                android:id="@+id/quotesBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#D7444A"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_present"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="Yesterday Present"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:onClick="yesterday_absent"
+                android:id="@+id/solidBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#0081DA"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_specific_date"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="Yesterday Absent"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:onClick="yesterday_late"
+                android:id="@+id/tutorialsBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#00A48B"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_late"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="Yesterday Late"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+           <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/addressBtn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="#F06A40"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_fontIconSize="25sp"
+                fancy:fb_iconPaddingBottom="5dp"
+                fancy:fb_iconPaddingTop="2dp"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/ic_specific_date"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="About"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textSize="20dp">
+            </mehdi.sakout.fancybuttons.FancyButton>
+
+            <!--<mehdi.sakout.fancybuttons.FancyButton-->
+                <!--android:onClick="settingsBtn"-->
+                <!--android:id="@+id/settingsBtn"-->
+                <!--android:layout_width="120dp"-->
+                <!--android:layout_height="120dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginLeft="40dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:padding="10dp"-->
+                <!--fancy:fb_borderColor="#FFFFFF"-->
+                <!--fancy:fb_borderWidth="2dp"-->
+                <!--fancy:fb_defaultColor="#304F9A"-->
+                <!--fancy:fb_focusColor="#8cc9f8"-->
+                <!--fancy:fb_fontIconSize="25sp"-->
+                <!--fancy:fb_iconPaddingBottom="5dp"-->
+                <!--fancy:fb_iconPaddingTop="2dp"-->
+                <!--fancy:fb_iconPosition="top"-->
+                <!--fancy:fb_iconResource="@mipmap/ic_settings"-->
+                <!--fancy:fb_radius="10dp"-->
+                <!--fancy:fb_text="Settings"-->
+                <!--fancy:fb_textColor="#FFFFFF"-->
+                <!--fancy:fb_textSize="20dp">-->
+            <!--</mehdi.sakout.fancybuttons.FancyButton>-->
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

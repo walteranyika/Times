@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_today_present"
+            android:icon="@drawable/ic_present"
+            android:title="Today Present"/>
+        <item
+            android:id="@+id/nav_today_absent"
+            android:icon="@drawable/ic_today_black_24dp"
+            android:title="Today Absent"/>
+        <item
+            android:id="@+id/nav_today_late"
+            android:icon="@drawable/ic_late"
+            android:title="Today Late"/>
+        <item
+            android:id="@+id/nav_yester_present"
+            android:icon="@drawable/ic_present"
+            android:title="Yesterday Present"/>
+        <item
+            android:icon="@drawable/ic_today_black_24dp"
+            android:id="@+id/nav_yester_absent"
+            android:title="Yesterday Absent"/>
+        <item
+            android:icon="@drawable/ic_late"
+            android:id="@+id/nav_yester_late"
+            android:title="Yesterday Late"/>
+        <item
+            android:icon="@drawable/ic_specific_date"
+            android:id="@+id/nav_specific_date"
+            android:title="Specific Date"/>
+    </group>
+
+</menu>
