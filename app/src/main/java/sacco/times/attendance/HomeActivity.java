@@ -23,10 +23,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.apache.commons.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,10 +90,13 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mCustomAdapter);
         //  mCustomAdapter.getFilter().filter(query);
-        mSpotsDialog = new SpotsDialog(this, "Fetching...");
+        mSpotsDialog = new SpotsDialog(this, "Fetching");
 
         txt_feed_back = findViewById(R.id.txt_feed_back);
         getCurrentDate();
+        if (getIntent().getExtras()!=null && getIntent().getExtras().containsKey("date")){
+            date=getIntent().getStringExtra("date");
+        }
 
         fetch_records();
     }
@@ -157,26 +162,26 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
                 throwable.printStackTrace();
                 Log.d(TAG, "onFailure: "+responseString+ statusCode);
                 Toast.makeText(HomeActivity.this, "Could Not Fetch The Data. Please Check Your Connection", Toast.LENGTH_SHORT).show();
-                txt_feed_back.setVisibility(View.VISIBLE);
-                txt_feed_back.setText("No Data Was Found For Date " + date);
+                mItemsArrayList.clear();
+                toggleTextView();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d(TAG, "onSuccess: " + responseString);
                 if (responseString.contains("No Data Found")) {
-                    txt_feed_back.setVisibility(View.VISIBLE);
-                    txt_feed_back.setText("No Data Was Found For Date " + date);
-                } else {
+                    mItemsArrayList.clear();
+                    mCustomAdapter.notifyDataSetChanged();
+                    toggleTextView();
 
-
+                } else
+                {
                     try {
                         JSONArray jsonArray = new JSONArray(responseString);
                         mItemsArrayList.clear();
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
-                            //pin,  branch, device_branch, device, logname, logtime, department
                             String logname = obj.getString("logname");
                             String pin = obj.getString("pin");
                             String branch = obj.getString("branch");
@@ -187,7 +192,7 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
                             String logout = obj.getString("logout");
                             if (logname==null || logname.trim().isEmpty() || branch.trim().isEmpty() || branch==null)
                                 continue;
-                            Item k = new Item(pin, branch, device_branch, device, logname, logtime, department,logout);
+                            Item k = new Item(pin, branch, device_branch, device, WordUtils.capitalize(logname.toLowerCase()), logtime, department,logout);
                             Date startDate = DateUtils.parseDate(logtime);
                             k.setLoginDate(startDate);
                             mItemsArrayList.add(k);
@@ -196,7 +201,6 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
                         }
                         //sort
                         Collections.sort(mItemsArrayList,new CustomComparator());
-
                         mCustomAdapter.notifyDataSetChanged();
                         toggleTextView();
                     } catch (JSONException e) {
@@ -221,6 +225,8 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
     }
 
     String TAG = "ATTENDANCE_DATA";
+    int pos_A=0;
+    int pos_B=0;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -230,22 +236,32 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
         mSpinnerBranch = menu.findItem(R.id.menu_spinner_1);
         mSpinnerDepartment = menu.findItem(R.id.menu_spinner_2);
 
+        final String deps[] = {"All Dep", "ICT", "FINANCE", "CREDIT", "BS DEV","AUDIT"};
+        final String branches[] = {"All Branches", "Nkubu", "Mitunguu", "Githongo", "Makutano", "Kariene"};
+
         View view2=mSpinnerDepartment.getActionView();
         if (view2 instanceof Spinner){
             final Spinner spinner2 = (Spinner) view2;
-            final String deps[] = {"All Dep", "ICT", "FINANCE", "CREDIT", "BS DEV","AUDIT"};
+
             ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_spinner_item, deps);
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner2.setAdapter(adapter2);
             spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    Log.d(TAG, "onItemSelected: " + deps[i]);
-                    if (i!=0) {
-                        mCustomAdapter.getFilter().filter(deps[i]);
-                    }else{
+                   // if (i!=0) {
+                      //  mCustomAdapter.getFilter().filter(deps[i]);
+                        pos_A=i;
+                        String a=pos_A==0?" ":deps[pos_A];
+                        String b=pos_B==0?" ":branches[pos_B];
+                        String search=a+":"+b;
+                        Log.d(TAG, "onItemSelected: "+search);
+                         mCustomAdapter.getFilter().filter(search);
+
+         /*          }else{
                         mCustomAdapter.getFilter().filter("");
-                    }
+                        pos_A=0;
+                    }*/
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
@@ -258,7 +274,7 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
         View view = mSpinnerBranch.getActionView();
         if (view instanceof Spinner) {
             final Spinner spinner = (Spinner) view;
-            final String branches[] = {"All Branches", "Nkubu", "Mitunguu", "Githongo", "Makutano", "Kariene"};
+
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_spinner_item, branches);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
@@ -266,12 +282,18 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    Log.d(TAG, "onItemSelected: " + branches[i]);
-                    if (i!=0) {
-                        mCustomAdapter.getFilter().filter(branches[i]);
-                    }else{
+//                   if (i!=0) {
+//                        mCustomAdapter.getFilter().filter(branches[i]);
+                        pos_B=i;
+                        String a=pos_A==0?" ":deps[pos_A];
+                        String b=pos_B==0?" ":branches[pos_B];
+                        String search=a+":"+b;
+                        Log.d(TAG, "onItemSelected: "+search);
+                        mCustomAdapter.getFilter().filter(search);
+                   /* }else{
                         mCustomAdapter.getFilter().filter("");
-                    }
+                        pos_B=0;
+                    }*/
                 }
 
                 @Override
@@ -291,6 +313,14 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id==R.id.menu_logout){
+            FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+            firebaseAuth.signOut();
+            Intent x=new Intent(HomeActivity.this, MainActivity.class);
+            x.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(x);
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -351,7 +381,6 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
             txt_feed_back.setVisibility(View.GONE);
         }
     }
-   //list, hours worked, filter for department
 
 }
 

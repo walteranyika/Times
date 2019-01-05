@@ -32,7 +32,7 @@ public class CustomAbsentAdapter extends RecyclerView.Adapter<CustomAbsentAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_layout_absent, parent, false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_layout_absent2, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -41,7 +41,8 @@ public class CustomAbsentAdapter extends RecyclerView.Adapter<CustomAbsentAdapte
         Absent u=displayList.get(position);
         holder.txtNames.setText(u.getNames());
         holder.txtBranch.setText(u.getBranch());
-        holder.txtDepartment.setText(u.getDepartment());
+        String dep = u.getDepartment().length() > 12 ? "BS DEV" : u.getDepartment();
+        u.setDepartment(dep);
         holder.txtDate.setText(u.getDate());
     }
 
@@ -63,7 +64,7 @@ public class CustomAbsentAdapter extends RecyclerView.Adapter<CustomAbsentAdapte
                     ArrayList<Absent> filteredResults =new ArrayList<>();
                     String search = constraint.toString().toLowerCase();
                     for (Absent u:arrayList) {
-                        if(u.getBranch().toLowerCase().contains(search) )//|| u.getCourse().toLowerCase().contains(search) || u.getCampus().toLowerCase().contains(search)){
+                        if(u.getBranch().toLowerCase().contains(search) )
                            filteredResults.add(u);
                         }
                     results.values = filteredResults;

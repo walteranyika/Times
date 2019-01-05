@@ -19,4 +19,8 @@
         android:orderInCategory="2"
         app:showAsAction="always"
         app:actionViewClass="android.widget.Spinner"/>
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Sign Out"
+        app:showAsAction="never"/>
 </menu>

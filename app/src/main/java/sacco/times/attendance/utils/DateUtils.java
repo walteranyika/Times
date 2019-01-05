@@ -16,13 +16,24 @@ public class DateUtils {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date1 = null;
         try {
-            date1 = dateFormat.parse (strDate);
+            date1 = dateFormat.parse(strDate);
         }
         catch (ParseException e) {
             e.printStackTrace ();
         }
         return date1;
     }
+
+    public static String formatDate(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return  dateFormat.format(date);
+    }
+
+    public static String formatTime(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+        return  dateFormat.format(date);
+    }
+
 
     public static String formatElapsedTime (long seconds) {
 

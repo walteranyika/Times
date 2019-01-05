@@ -31,15 +31,16 @@
             android:label="Absentees"
             android:parentActivityName=".HomeActivity">
         </activity>
-
         <activity
             android:name=".LateActivity"
             android:label="Late"
             android:parentActivityName=".HomeActivity">
         </activity>
-
-        <activity android:label="Home"
-                  android:name=".LandingActivity">
+        <activity
+            android:name=".LandingActivity"
+            android:label="Home">
+        </activity>
+        <activity android:theme="@style/AppTheme.NoActionBar" android:name=".AboutActivity">
         </activity>
     </application>
 

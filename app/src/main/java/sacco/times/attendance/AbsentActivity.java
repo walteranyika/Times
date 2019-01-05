@@ -1,6 +1,7 @@
 package sacco.times.attendance;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.apache.commons.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,18 +84,7 @@ public class AbsentActivity extends AppCompatActivity {
         date = year + "-" + monStr + "-" + dayStr;
     }
 
-    private void getYesterdaysDate() {
-        final Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, -1);
 
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        String dayStr = String.valueOf(day).length() == 1 ? "0" + day : "" + day;
-        String monStr = String.valueOf(month).length() == 1 ? "0" + month : "" + month;
-
-        date = year + "-" + monStr + "-" + dayStr;
-    }
 
     private void showDatePicker() {
         final Calendar c = Calendar.getInstance();
@@ -125,16 +117,18 @@ public class AbsentActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 mSpotsDialog.dismiss();
                 Toast.makeText(AbsentActivity.this, "Could Not Fetch The Data. Please Check Your Connection", Toast.LENGTH_SHORT).show();
-                txt_feed_back.setVisibility(View.VISIBLE);
-                txt_feed_back.setText("No Data Was Found For Date " + date);
+                mItemsArrayList.clear();
+                toggleTextView();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d(TAG, "onSuccess: " + responseString);
                 if (responseString.contains("No Data Found")) {
-                    txt_feed_back.setVisibility(View.VISIBLE);
-                    txt_feed_back.setText("No Data Was Found For Date " + date);
+                    mItemsArrayList.clear();
+                    mCustomAdapter.notifyDataSetChanged();
+                    toggleTextView();
+
                 } else {
 
 
@@ -149,7 +143,7 @@ public class AbsentActivity extends AppCompatActivity {
                             String date = obj.getString("date");
                             String branch = obj.getString("branch");
                             String department = obj.getString("department");
-                            Absent k = new Absent(names,branch,department,date);
+                            Absent k = new Absent(WordUtils.capitalize(names.toLowerCase()),branch,department,date);
                             mItemsArrayList.add(k);
 
                         }
@@ -170,11 +164,8 @@ public class AbsentActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.absent, menu);
-
         mSpinnerItem1 = menu.findItem(R.id.menu_spinner_1);
-
         View view = mSpinnerItem1.getActionView();
         if (view instanceof Spinner) {
             final Spinner spinner = (Spinner) view;
@@ -218,6 +209,14 @@ public class AbsentActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
+        if (id==R.id.menu_logout){
+            FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+            firebaseAuth.signOut();
+            Intent x=new Intent(AbsentActivity.this, MainActivity.class);
+            x.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(x);
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 

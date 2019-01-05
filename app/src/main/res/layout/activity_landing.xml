@@ -194,6 +194,7 @@
 
 
            <mehdi.sakout.fancybuttons.FancyButton
+               android:onClick="about_us"
                 android:id="@+id/addressBtn"
                 android:layout_width="120dp"
                 android:layout_height="120dp"

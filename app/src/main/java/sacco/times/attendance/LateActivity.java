@@ -1,6 +1,7 @@
 package sacco.times.attendance;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,22 +19,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.apache.commons.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import dmax.dialog.SpotsDialog;
 import sacco.times.attendance.adapters.CustomAdapter;
 import sacco.times.attendance.adapters.CustomLateAdapter;
+import sacco.times.attendance.models.CustomComparator;
 import sacco.times.attendance.models.Item;
+import sacco.times.attendance.utils.DateUtils;
 import sacco.times.attendance.utils.Urls;
 
 public class LateActivity extends AppCompatActivity {
@@ -109,16 +116,17 @@ public class LateActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 mSpotsDialog.dismiss();
                 Toast.makeText(LateActivity.this, "Could Not Fetch The Data. Please Check Your Connection", Toast.LENGTH_SHORT).show();
-                txt_feed_back.setVisibility(View.VISIBLE);
-                txt_feed_back.setText("No Data Was Found For Date " + date);
+                mItemsArrayList.clear();
+                toggleTextView();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.d(TAG, "onSuccess: " + responseString);
                 if (responseString.contains("No Data Found")) {
-                    txt_feed_back.setVisibility(View.VISIBLE);
-                    txt_feed_back.setText("No Data Was Found For Date " + date);
+                    mItemsArrayList.clear();
+                    mCustomAdapter.notifyDataSetChanged();
+                    toggleTextView();
                 } else {
 
 
@@ -139,11 +147,14 @@ public class LateActivity extends AppCompatActivity {
                             String logout = obj.getString("logtime");
                             if (logname==null || logname.trim().isEmpty() || branch.trim().isEmpty() || branch==null)
                                 continue;
-                            Item k = new Item(pin, branch, device_branch, device, logname, logtime, department,logout);
+                            Item k = new Item(pin, branch, device_branch, device, WordUtils.capitalize(logname.toLowerCase()) , logtime, department,logout);
+                            Date startDate = DateUtils.parseDate(logtime);
+                            k.setLoginDate(startDate);
                             mItemsArrayList.add(k);
 
                         }
                         mCustomAdapter.notifyDataSetChanged();
+                        Collections.sort(mItemsArrayList,new CustomComparator());
                         toggleTextView();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -152,7 +163,6 @@ public class LateActivity extends AppCompatActivity {
                 mSpotsDialog.dismiss();
             }
         });
-
 
     }
     public void toggleTextView(){
@@ -197,6 +207,22 @@ public class LateActivity extends AppCompatActivity {
             });
         }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+
+        if (id==R.id.menu_logout){
+            FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+            firebaseAuth.signOut();
+            Intent x=new Intent(LateActivity.this, MainActivity.class);
+            x.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(x);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void pick_date(View view) {
