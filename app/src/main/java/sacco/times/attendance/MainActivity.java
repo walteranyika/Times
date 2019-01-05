@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,11 +23,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity {
     MaterialEditText inputEmail, inputPassword;
     //P@55w0Rd
     //admin@timesusacco.co.ke
     FirebaseAuth firebaseAuth;
+    ProgressBar progress;
+    boolean isAvailable=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
+        progress=findViewById(R.id.progress);
         firebaseAuth = FirebaseAuth.getInstance();
+        inputEmail.clearFocus();
+        inputPassword.clearFocus();
+        hideKeyboard(this);
 
         if (firebaseAuth.getCurrentUser()!=null){
             Intent x = new Intent(MainActivity.this, LandingActivity.class);
@@ -44,34 +57,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(final View view) {
+        hideKeyboard(this);
         String names = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
         if (names.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Fill in all the values", Toast.LENGTH_SHORT).show();
             return;
         }
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
 
         //TODO Login logic
         if (isConnected()) {
-            firebaseAuth.signInWithEmailAndPassword(names, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            progress.setVisibility(View.VISIBLE);
+            firebaseAuth.signInWithEmailAndPassword(names, password)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
+                    progress.setVisibility(View.INVISIBLE);
                     Intent x = new Intent(MainActivity.this, LandingActivity.class);
                     x.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(x);
                     finish();
+
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    progress.setVisibility(View.INVISIBLE);
                     Snackbar.make(view, "Wrong Username Or Password. Please Try Again", Snackbar.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             });
-
-
         } else {
             Toast.makeText(this, "You need Internet Connection. Please Turn on your data or connect to a WIFI", Toast.LENGTH_SHORT).show();
         }
@@ -93,4 +110,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+    String TAG="NETWORK";
+
+
+    public  void hideKeyboard(Activity activity) {
+        View view = activity.findViewById(android.R.id.content);
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+
 }
