@@ -122,4 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void change_password(View view) {
+      startActivity(new Intent(this, ChangePasswordActivity.class));
+    }
 }

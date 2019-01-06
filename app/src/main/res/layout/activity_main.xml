@@ -49,7 +49,6 @@
             android:textSize="20sp"
             app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            android:text="admin@timesusacco.co.ke"
             app:met_singleLineEllipsis="true"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -57,7 +56,6 @@
             android:id="@+id/inputPassword"
             android:hint="Password"
             android:inputType="textPassword"
-            android:text="P@55w0Rd"
             android:textColorHint="@color/colorPrimary"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
@@ -83,6 +81,16 @@
             fancy:fb_text="SIGN IN"
             android:layout_marginTop="12dp"
             fancy:fb_textColor="#FFFFFF"/>
+
+        <TextView
+            android:onClick="change_password"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:textColor="#066804"
+            android:text="Forgot Password?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>
