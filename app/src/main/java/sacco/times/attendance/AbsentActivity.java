@@ -2,8 +2,6 @@ package sacco.times.attendance;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,9 +33,7 @@ import java.util.Calendar;
 import cz.msebera.android.httpclient.Header;
 import dmax.dialog.SpotsDialog;
 import sacco.times.attendance.adapters.CustomAbsentAdapter;
-import sacco.times.attendance.adapters.CustomAdapter;
 import sacco.times.attendance.models.Absent;
-import sacco.times.attendance.models.Item;
 import sacco.times.attendance.utils.Urls;
 
 public class AbsentActivity extends AppCompatActivity {

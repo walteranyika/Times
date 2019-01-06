@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import org.apache.commons.validator.routines.EmailValidator;
+//import org.apache.commons.validator.routines.EmailValidator;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     MaterialEditText inputEmail;
@@ -39,8 +39,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
     public void request_change_password(View view) {
         hideKeyboard(this);
         final String email = inputEmail.getText().toString().trim();
-        EmailValidator validator = EmailValidator.getInstance();
-        if (email.isEmpty() || !validator.isValid(email)) {
+       // EmailValidator validator = EmailValidator.getInstance();
+        if (email.isEmpty()) {
             Toast.makeText(this, "Provide A Valid Email Address", Toast.LENGTH_SHORT).show();
             return;
         }

@@ -45,7 +45,10 @@
             android:name=".AboutActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ChangePasswordActivity">
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="Password Reset"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

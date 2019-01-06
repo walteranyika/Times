@@ -10,7 +10,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import sacco.times.attendance.R;
 import sacco.times.attendance.models.Item;

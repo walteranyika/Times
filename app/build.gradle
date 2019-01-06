@@ -20,7 +20,7 @@ android {
 
 dependencies {
     implementation 'org.apache.commons:commons-text:1.1'
-    implementation 'commons-validator:commons-validator:1.4.0'
+//    implementation 'commons-validator:commons-validator:1.4.0'
 
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -36,7 +36,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
-
-
-
 apply plugin: 'com.google.gms.google-services'
