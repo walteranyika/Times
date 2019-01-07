@@ -1,4 +1,4 @@
-package sacco.times.attendance.models;
+package timesu.sacco.attendance.models;
 
 /**
  * Created by walter on 1/3/19.

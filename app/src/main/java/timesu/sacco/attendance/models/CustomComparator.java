@@ -1,4 +1,4 @@
-package sacco.times.attendance.models;
+package timesu.sacco.attendance.models;
 
 import java.util.Comparator;
 

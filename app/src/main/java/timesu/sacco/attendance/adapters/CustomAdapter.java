@@ -1,4 +1,4 @@
-package sacco.times.attendance.adapters;
+package timesu.sacco.attendance.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Date;
 
-import sacco.times.attendance.R;
-import sacco.times.attendance.models.Item;
-import sacco.times.attendance.utils.DateUtils;
+import timesu.sacco.attendance.R;
+import timesu.sacco.attendance.models.Item;
+import timesu.sacco.attendance.utils.DateUtils;
 
 /**
  * Created by walter on 9/25/18.

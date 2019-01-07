@@ -2,7 +2,7 @@
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                       xmlns:app="http://schemas.android.com/apk/res-auto"
                       xmlns:tools="http://schemas.android.com/tools"
-                      tools:context="sacco.times.attendance.LateActivity"
+                      tools:context="timesu.sacco.attendance.LateActivity"
                       android:scrollbars="none"
                       android:layout_width="match_parent"
                       android:layout_height="match_parent">

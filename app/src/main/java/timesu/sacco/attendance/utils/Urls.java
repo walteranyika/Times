@@ -1,4 +1,4 @@
-package sacco.times.attendance.utils;
+package timesu.sacco.attendance.utils;
 
 /**
  * Created by walter on 1/4/19.

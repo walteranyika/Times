@@ -1,4 +1,4 @@
-package sacco.times.attendance;
+package timesu.sacco.attendance;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -29,34 +29,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import dmax.dialog.SpotsDialog;
-import sacco.times.attendance.adapters.CustomLateAdapter;
-import sacco.times.attendance.models.CustomComparator;
-import sacco.times.attendance.models.Item;
-import sacco.times.attendance.utils.DateUtils;
-import sacco.times.attendance.utils.Urls;
+import timesu.sacco.attendance.adapters.CustomAbsentAdapter;
+import timesu.sacco.attendance.models.Absent;
+import timesu.sacco.attendance.utils.Urls;
 
-public class LateActivity extends AppCompatActivity {
+public class AbsentActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
-    CustomLateAdapter mCustomAdapter;
-    ArrayList<Item> mItemsArrayList;
+    CustomAbsentAdapter mCustomAdapter;
+    ArrayList<Absent> mItemsArrayList;
     SpotsDialog mSpotsDialog;
 
     MenuItem mSpinnerItem1 = null;
-
     TextView txt_feed_back;
     String date = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_late);
+        setContentView(R.layout.activity_absent);
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mItemsArrayList = new ArrayList<>();
-        mCustomAdapter = new CustomLateAdapter(this, mItemsArrayList);
+        mCustomAdapter = new CustomAbsentAdapter(this, mItemsArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mCustomAdapter);
@@ -69,8 +65,10 @@ public class LateActivity extends AppCompatActivity {
         {
             getCurrentDate();
         }
+
         fetch_records();
     }
+
     private void getCurrentDate() {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -81,6 +79,7 @@ public class LateActivity extends AppCompatActivity {
 
         date = year + "-" + monStr + "-" + dayStr;
     }
+
 
 
     private void showDatePicker() {
@@ -97,13 +96,14 @@ public class LateActivity extends AppCompatActivity {
                 String monStr = String.valueOf(month).length() == 1 ? "0" + month : "" + month;
                 date = year + "-" + monStr + "-" + dayStr;
                 fetch_records();
+//                Toast.makeText(HomeActivity.this, year + "-" + month + "-" + day, Toast.LENGTH_SHORT).show();
             }
         }, year, month, day).show();
     }
 
     private void fetch_records() {
 
-        String url =  Urls.BASE_URL+"late.php";
+        String url = Urls.BASE_URL+"absent.php";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("date", date);
@@ -112,7 +112,7 @@ public class LateActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 mSpotsDialog.dismiss();
-                Toast.makeText(LateActivity.this, "Could Not Fetch The Data. Please Check Your Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AbsentActivity.this, "Could Not Fetch The Data. Please Check Your Connection", Toast.LENGTH_SHORT).show();
                 mItemsArrayList.clear();
                 toggleTextView();
             }
@@ -124,6 +124,7 @@ public class LateActivity extends AppCompatActivity {
                     mItemsArrayList.clear();
                     mCustomAdapter.notifyDataSetChanged();
                     toggleTextView();
+
                 } else {
 
 
@@ -134,24 +135,15 @@ public class LateActivity extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
                             //pin,  branch, device_branch, device, logname, logtime, department
-                            String logname = obj.getString("logname");
-                            String pin = obj.getString("pin");
+                            String names = obj.getString("names");
+                            String date = obj.getString("date");
                             String branch = obj.getString("branch");
-                            String device_branch = obj.getString("device_branch");
-                            String device = obj.getString("device");
-                            String logtime = obj.getString("logtime");
                             String department = obj.getString("department");
-                            String logout = obj.getString("logtime");
-                            if (logname==null || logname.trim().isEmpty() || branch.trim().isEmpty() || branch==null)
-                                continue;
-                            Item k = new Item(pin, branch, device_branch, device, WordUtils.capitalize(logname.toLowerCase()) , logtime, department,logout);
-                            Date startDate = DateUtils.parseDate(logtime);
-                            k.setLoginDate(startDate);
+                            Absent k = new Absent(WordUtils.capitalize(names.toLowerCase()),branch,department,date);
                             mItemsArrayList.add(k);
 
                         }
                         mCustomAdapter.notifyDataSetChanged();
-                        Collections.sort(mItemsArrayList,new CustomComparator());
                         toggleTextView();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -161,29 +153,20 @@ public class LateActivity extends AppCompatActivity {
             }
         });
 
-    }
-    public void toggleTextView(){
-        if (mItemsArrayList.size()==0) {
-            txt_feed_back.setVisibility(View.VISIBLE);
-            txt_feed_back.setText("No Data Was Found For Date " + date);
-        }else {
-            txt_feed_back.setVisibility(View.GONE);
-        }
-    }
 
+    }
 
     String TAG = "ATTENDANCE_DATA";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.late, menu);
+        getMenuInflater().inflate(R.menu.absent, menu);
         mSpinnerItem1 = menu.findItem(R.id.menu_spinner_1);
         View view = mSpinnerItem1.getActionView();
         if (view instanceof Spinner) {
             final Spinner spinner = (Spinner) view;
             final String branches[] = {"All Branches", "Nkubu", "Mitunguu", "Githongo", "Makutano", "Kariene"};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(LateActivity.this, android.R.layout.simple_spinner_item, branches);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(AbsentActivity.this, android.R.layout.simple_spinner_item, branches);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
 
@@ -197,6 +180,7 @@ public class LateActivity extends AppCompatActivity {
                         mCustomAdapter.getFilter().filter("");
                     }
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -205,16 +189,26 @@ public class LateActivity extends AppCompatActivity {
         }
         return true;
     }
+    public void toggleTextView(){
+        if (mItemsArrayList.size()==0) {
+            txt_feed_back.setVisibility(View.VISIBLE);
+            txt_feed_back.setText("No Data Was Found For Date " + date);
+        }else {
+            txt_feed_back.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
+        //noinspection SimplifiableIfStatement
         if (id==R.id.menu_logout){
             FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
             firebaseAuth.signOut();
-            Intent x=new Intent(LateActivity.this, MainActivity.class);
+            Intent x=new Intent(AbsentActivity.this, MainActivity.class);
             x.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(x);
             finish();

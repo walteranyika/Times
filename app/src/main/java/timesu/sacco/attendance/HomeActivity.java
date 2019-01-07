@@ -1,4 +1,4 @@
-package sacco.times.attendance;
+package timesu.sacco.attendance;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -40,11 +40,11 @@ import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import dmax.dialog.SpotsDialog;
-import sacco.times.attendance.adapters.CustomAdapter;
-import sacco.times.attendance.models.CustomComparator;
-import sacco.times.attendance.models.Item;
-import sacco.times.attendance.utils.DateUtils;
-import sacco.times.attendance.utils.Urls;
+import timesu.sacco.attendance.adapters.CustomAdapter;
+import timesu.sacco.attendance.models.CustomComparator;
+import timesu.sacco.attendance.models.Item;
+import timesu.sacco.attendance.utils.DateUtils;
+import timesu.sacco.attendance.utils.Urls;
 
 public class HomeActivity extends AppCompatActivity     implements NavigationView.OnNavigationItemSelectedListener {
 

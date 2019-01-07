@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "sacco.times.attendance"
+        applicationId "timesu.sacco.attendance"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 2
-        versionName "1.3"
+        versionCode 4
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

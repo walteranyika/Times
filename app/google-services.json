@@ -49,6 +49,50 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594271865051:android:c3c7af02c5499373",
+        "android_client_info": {
+          "package_name": "timesu.sacco.attendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594271865051-0tucj2qh5u4sl1cnua330o4mfqgdn927.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "timesu.sacco.attendance",
+            "certificate_hash": "3e00044619b6251bad66eaab02a78b1a96c1454f"
+          }
+        },
+        {
+          "client_id": "594271865051-s3bvkrmrtnglr7o281ak348keh41ibcf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuqPUBsS0oeuo9QsOHfKqxjlD89tXN0ow"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594271865051-s3bvkrmrtnglr7o281ak348keh41ibcf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

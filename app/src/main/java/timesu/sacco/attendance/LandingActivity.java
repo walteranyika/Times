@@ -1,4 +1,4 @@
-package sacco.times.attendance;
+package timesu.sacco.attendance;
 
 import android.app.Activity;
 import android.content.Intent;
