@@ -6,8 +6,8 @@ android {
         applicationId "timesu.sacco.attendance"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.5"
+        versionCode 5
+        versionName "1.6.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
