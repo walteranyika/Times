@@ -5,5 +5,5 @@ package timesu.sacco.attendance.utils;
  */
 
 public class Urls {
-    public static final String BASE_URL="http://timesusacco.co.ke/biometric/";
+    public static final String BASE_URL="https://timesusacco.co.ke/biometric/";
 }
