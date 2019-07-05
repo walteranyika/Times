@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:594271865051:android:20b18728838f8d51",
+        "mobilesdk_app_id": "1:594271865051:android:8f434f4ff8a3487e",
         "android_client_info": {
-          "package_name": "sacco.times.attendance"
+          "package_name": "timesu.sacco.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "594271865051-92h3p873lkf3l6tncujj3vm7jncvasm1.apps.googleusercontent.com",
+          "client_id": "594271865051-gbufrm591erqsa01r7ul6nj546cg6cm8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "sacco.times.attendance",
-            "certificate_hash": "3e00044619b6251bad66eaab02a78b1a96c1454f"
+            "package_name": "timesu.sacco.app",
+            "certificate_hash": "0d0219b0000c4edb5fe96b3401fcdda9019df5d9"
           }
         },
         {
@@ -33,20 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "594271865051-s3bvkrmrtnglr7o281ak348keh41ibcf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     },
@@ -77,20 +70,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "594271865051-s3bvkrmrtnglr7o281ak348keh41ibcf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

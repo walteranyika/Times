@@ -10,7 +10,7 @@
     android:padding="16dp"
     android:background="#ffffff"
     android:fitsSystemWindows="true"
-    tools:context="timesu.sacco.attendance.MainActivity">
+    tools:context="timesu.sacco.app.MainActivity">
 
     <ImageView
         android:layout_marginTop="60dp"

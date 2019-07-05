@@ -1,4 +1,4 @@
-package timesu.sacco.attendance.utils;
+package timesu.sacco.app.utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;

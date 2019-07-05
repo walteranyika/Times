@@ -1,12 +1,10 @@
-package timesu.sacco.attendance;
+package timesu.sacco.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import java.util.Calendar;
-
-import timesu.sacco.attendance.BuildConfig;
 
 public class AboutActivity extends AppCompatActivity {
     TextView txtVersion;

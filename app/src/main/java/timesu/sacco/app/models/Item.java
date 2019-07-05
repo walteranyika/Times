@@ -1,4 +1,4 @@
-package timesu.sacco.attendance.models;
+package timesu.sacco.app.models;
 
 import java.util.Date;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="timesu.sacco.attendance">
+          package="timesu.sacco.app">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="timesu.sacco.app.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -23,32 +23,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="timesu.sacco.app.HomeActivity"
             android:label="Reports"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".AbsentActivity"
+            android:name="timesu.sacco.app.AbsentActivity"
             android:label="Absentees"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName="timesu.sacco.app.HomeActivity">
         </activity>
         <activity
-            android:name=".LateActivity"
+            android:name="timesu.sacco.app.LateActivity"
             android:label="Late"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName="timesu.sacco.app.HomeActivity">
         </activity>
         <activity
-            android:name=".LandingActivity"
+            android:name="timesu.sacco.app.LandingActivity"
             android:label="Home">
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name="timesu.sacco.app.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name="timesu.sacco.app.ChangePasswordActivity"
             android:label="Password Reset"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="timesu.sacco.app.MainActivity">
         </activity>
     </application>
 
