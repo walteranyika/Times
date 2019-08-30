@@ -139,6 +139,7 @@ public class AbsentActivity extends AppCompatActivity {
 
 
                     try {
+
                         JSONArray jsonArray = new JSONArray(responseString);
                         mItemsArrayList.clear();
 
@@ -151,9 +152,13 @@ public class AbsentActivity extends AppCompatActivity {
                             String department = obj.getString("department");
                             Absent k = new Absent(WordUtils.capitalize(names.toLowerCase()),branch,department,date);
                             mItemsArrayList.add(k);
+                            Log.d(TAG, "onSuccess: Processing");
 
                         }
                         mCustomAdapter.notifyDataSetChanged();
+                        Log.d(TAG, "onSuccess: Refreshing");
+                        mCustomAdapter.getFilter().filter("");
+                        spinner.setSelection(0);
                         toggleTextView();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -167,6 +172,7 @@ public class AbsentActivity extends AppCompatActivity {
     }
 
     String TAG = "ATTENDANCE_DATA";
+    Spinner spinner;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -174,7 +180,7 @@ public class AbsentActivity extends AppCompatActivity {
         mSpinnerItem1 = menu.findItem(R.id.menu_spinner_1);
         View view = mSpinnerItem1.getActionView();
         if (view instanceof Spinner) {
-            final Spinner spinner = (Spinner) view;
+            spinner = (Spinner) view;
             final String branches[] = {"All Branches", "Nkubu", "Mitunguu", "Githongo", "Makutano", "Kariene"};
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(AbsentActivity.this, android.R.layout.simple_spinner_item, branches);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -187,6 +193,7 @@ public class AbsentActivity extends AppCompatActivity {
                     if (i!=0) {
                         mCustomAdapter.getFilter().filter(branches[i]);
                     }else{
+                        Log.d(TAG, "onItemSelected: FILTER WORKING");
                         mCustomAdapter.getFilter().filter("");
                     }
                 }

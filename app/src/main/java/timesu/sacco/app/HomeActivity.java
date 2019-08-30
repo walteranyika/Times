@@ -212,6 +212,10 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
                         //sort
                         Collections.sort(mItemsArrayList,new CustomComparator());
                         mCustomAdapter.notifyDataSetChanged();
+                        mCustomAdapter.getFilter().filter(":");
+                        spinner.setSelection(0);
+                        spinner2.setSelection(0);
+
                         toggleTextView();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -237,6 +241,8 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
     String TAG = "ATTENDANCE_DATA";
     int pos_A=0;
     int pos_B=0;
+   Spinner spinner2;
+    Spinner spinner;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -251,7 +257,7 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
 
         View view2=mSpinnerDepartment.getActionView();
         if (view2 instanceof Spinner){
-            final Spinner spinner2 = (Spinner) view2;
+            spinner2 = (Spinner) view2;
 
             ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_spinner_item, deps);
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -283,7 +289,7 @@ public class HomeActivity extends AppCompatActivity     implements NavigationVie
 
         View view = mSpinnerBranch.getActionView();
         if (view instanceof Spinner) {
-            final Spinner spinner = (Spinner) view;
+            spinner = (Spinner) view;
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this, android.R.layout.simple_spinner_item, branches);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
